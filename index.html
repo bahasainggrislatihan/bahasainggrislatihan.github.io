@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal TKA Bahasa Inggris SMP</title>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #app-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        #quiz-container {
+            padding: 30px;
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px;
+        }
+
+        .question-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .reading-text {
+            font-style: italic;
+            background-color: #f9f9f9;
+            border-left: 4px solid #007bff;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1em;
+            text-align: left;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-sizing: border-box; /* Penting untuk padding */
+        }
+
+        .option:hover:not(:disabled) {
+            background-color: #e9ecef;
+            border-color: #007bff;
+        }
+
+        /* Status setelah dijawab */
+        .option.correct {
+            background-color: #28a745 !important;
+            border-color: #28a745 !important;
+            color: white;
+            font-weight: bold;
+        }
+
+        .option.incorrect {
+            background-color: #dc3545 !important;
+            border-color: #dc3545 !important;
+            color: white;
+        }
+
+        .option:disabled {
+            cursor: not-allowed;
+        }
+
+        /* Saat sudah dijawab, abu-abukan pilihan lain */
+        .question-block.answered .option:not(.correct):not(.incorrect) {
+            background-color: #f0f0f0;
+            color: #888;
+            opacity: 0.7;
+        }
+
+        #submit-btn {
+            display: block;
+            width: calc(100% - 60px); /* Sesuaikan dengan padding container */
+            margin: 0 30px 30px 30px;
+            padding: 15px;
+            font-size: 1.25em;
+            font-weight: bold;
+            color: white;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #e0a800;
+        }
+
+        #results {
+            padding: 30px;
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: bold;
+            background-color: #e9ecef;
+            display: none; /* Sembunyi dulu */
+        }
+
+        /* Bagian Bantuan & Copyright */
+        #help-section {
+            padding: 20px 30px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+        }
+        
+        #help-section h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        #whatsapp-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            background-color: #25D366; /* Warna WhatsApp */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none; /* Untuk link */
+            transition: background-color 0.3s;
+        }
+        
+        #whatsapp-btn:hover {
+            background-color: #1EAE50;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #888;
+            background-color: #343a40;
+            color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        <header>
+            <h1>Latihan Soal TKA SMP 2025</h1>
+            <p>Bahasa Inggris (40 Soal)</p>
+        </header>
+
+        <div id="quiz-container">
+            </div>
+
+        <button id="submit-btn">Kirim & Lihat Nilai</button>
+
+        <div id="results">
+            </div>
+
+        <div id="help-section">
+            <h3>Butuh Bantuan atau Request Soal?</h3>
+            <p>Klik tombol di bawah untuk mengirim pesan request mata pelajaran lain.</p>
+            <a id="whatsapp-btn" href="https://api.whatsapp.com/send?phone=6287710239134&text=Saya%20mau%20request%20mata%20pelajaran" target="_blank">
+                Request via WhatsApp
+            </a>
+        </div>
+    </div>
+    
+    <footer>
+        &copy; 2025 - Di Buat Oleh Digital Ghost
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. DATA SOAL (40 Soal)
+            const questions = [
+                // Grammar: Simple Present
+                {
+                    question: "1. The earth ... around the sun.",
+                    options: ["go", "goes", "went", "is going"],
+                    answer: "goes"
+                },
+                {
+                    question: "2. My parents ... coffee every morning.",
+                    options: ["drink", "drinks", "drank", "is drinking"],
+                    answer: "drink"
+                },
+                // Grammar: Simple Past
+                {
+                    question: "3. We ... to Bali last year for holiday.",
+                    options: ["go", "goes", "went", "have gone"],
+                    answer: "went"
+                },
+                {
+                    question: "4. She ... not finish her homework last night.",
+                    options: ["do", "does", "did", "is"],
+                    answer: "did"
+                },
+                // Grammar: Present Continuous
+                {
+                    question: "5. Listen! Someone ... the piano.",
+                    options: ["plays", "play", "is playing", "played"],
+                    answer: "is playing"
+                },
+                {
+                    question: "6. Look at the sky! It ... to rain.",
+                    options: ["go", "is going", "goes", "went"],
+                    answer: "is going"
+                },
+                // Modals (Can, Must, Should)
+                {
+                    question: "7. You ... finish your homework before you play games.",
+                    options: ["can", "must", "may", "might"],
+                    answer: "must"
+                },
+                {
+                    question: "8. He has studied hard, so he ... pass the exam easily.",
+                    options: ["should", "must not", "cannot", "will not"],
+                    answer: "should"
+                },
+                // Prepositions (in, on, at)
+                {
+                    question: "9. The meeting will be held ... Friday morning.",
+                    options: ["in", "on", "at", "by"],
+                    answer: "on"
+                },
+                {
+                    question: "10. I usually wake up ... 5 AM every day.",
+                    options: ["in", "on", "at", "for"],
+                    answer: "at"
+                },
+                // Conjunctions (and, but, or, so)
+                {
+                    question: "11. Rina wants to buy a new bag, ... she doesn't have enough money.",
+                    options: ["and", "or", "so", "but"],
+                    answer: "but"
+                },
+                {
+                    question: "12. It was raining hard, ... we decided to stay home.",
+                    options: ["so", "but", "or", "because"],
+                    answer: "so"
+                },
+                // Vocabulary: Synonyms
+                {
+                    question: "13. The movie was very <b>interesting</b>. The synonym of 'interesting' is ...",
+                    options: ["boring", "long", "captivating", "sad"],
+                    answer: "captivating"
+                },
+                {
+                    question: "14. He is a very <b>diligent</b> student. The synonym of 'diligent' is ...",
+                    options: ["lazy", "smart", "hardworking", "kind"],
+                    answer: "hardworking"
+                },
+                // Vocabulary: Antonyms
+                {
+                    question: "15. The new supermarket is very <b>modern</b>. The antonym of 'modern' is ...",
+                    options: ["new", "traditional", "big", "cheap"],
+                    answer: "traditional"
+                },
+                {
+                    question: "16. It is <b>dangerous</b> to play near the river. The antonym of 'dangerous' is ...",
+                    options: ["safe", "harmful", "risky", "scary"],
+                    answer: "safe"
+                },
+                // Functional Text: Agreement/Disagreement
+                {
+                    question: "17. Adi: 'I think we should go to the library.'<br>Beni: '... That's a great idea.'",
+                    options: ["I disagree", "I don't think so", "I agree", "I'm not sure"],
+                    answer: "I agree"
+                },
+                // Functional Text: Invitation
+                {
+                    question: "18. Anna: 'Would you like to come to my birthday party tonight?'<br>Siti: '... I have to study for an exam.'",
+                    options: ["I'd love to!", "Sure, why not?", "I'm sorry, I can't.", "That sounds great!"],
+                    answer: "I'm sorry, I can't."
+                },
+                // Functional Text: Warning/Prohibition
+                {
+                    question: "19. You see a sign that says 'NO TRESPASSING'. What does it mean?",
+                    options: ["You can enter", "You must be quiet", "You are not allowed to enter", "You must pay"],
+                    answer: "You are not allowed to enter"
+                },
+                // Jumbled Words
+                {
+                    question: "20. Arrange these words into a good sentence: <br> (1)book - (2)is - (3)my - (4)reading - (5)father - (6)a",
+                    options: ["3-5-2-4-6-1", "5-2-3-4-1-6", "3-5-4-2-6-1", "5-2-4-6-1-3"],
+                    answer: "3-5-2-4-6-1" // My father is reading a book
+                },
+                {
+                    question: "21. Arrange these words: <br> (1)we - (2)yesterday - (3)did - (4)not - (5)school - (6)to - (7)go",
+                    options: ["1-3-4-7-6-5-2", "1-7-6-5-3-4-2", "3-4-1-7-6-5-2", "1-2-3-4-7-6-5"],
+                    answer: "1-3-4-7-6-5-2" // We did not go to school yesterday
+                },
+                // Degrees of Comparison
+                {
+                    question: "22. A cheetah is ... than a lion.",
+                    options: ["fast", "faster", "fastest", "as fast"],
+                    answer: "faster"
+                },
+                {
+                    question: "23. Mount Everest is the ... mountain in the world.",
+                    options: ["high", "higher", "highest", "as high"],
+                    answer: "highest"
+                },
+                {
+                    question: "24. This bag is ... as that one. They have the same price.",
+                    options: ["expensive", "more expensive", "most expensive", "as expensive"],
+                    answer: "as expensive"
+                },
+                // Question Tags
+                {
+                    question: "25. She is a very smart student, ...?",
+                    options: ["is she", "isn't she", "does she", "doesn't she"],
+                    answer: "isn't she"
+                },
+                {
+                    question: "26. They went to the beach, ...?",
+                    options: ["don't they", "aren't they", "didn't they", "weren't they"],
+                    answer: "didn't they"
+                },
+
+                // --- Reading Comprehension 1 (Announcement) ---
+                {
+                    text: "<b>Read the text for questions 27 and 28.</b><br><br>" +
+                          "<b>ANNOUNCEMENT</b><br>" +
+                          "To all students of SMP Harapan Bangsa,<br>" +
+                          "Our school will celebrate its 20th anniversary next month. To celebrate, we will hold several competitions, such as a singing contest, a speech contest, and a basketball match.<br>" +
+                          "The competitions will be held from November 10-12, 2025.<br>" +
+                          "For registration, please contact Mr. Budi, the OSIS advisor.<br><br>" +
+                          "Thank you,<br>Principal",
+                    question: "27. What is the announcement about?",
+                    options: ["A new school principal", "The school's anniversary celebration", "A basketball match final", "Registration for OSIS"],
+                    answer: "The school's anniversary celebration"
+                },
+                {
+                    question: "28. Who should students contact if they want to join the competitions?",
+                    options: ["The Principal", "The OSIS advisor", "Their classmates", "The singing contest judge"],
+                    answer: "The OSIS advisor"
+                },
+
+                // --- Reading Comprehension 2 (Descriptive Text) ---
+                {
+                    text: "<b>Read the text for questions 29-31.</b><br><br>" +
+                          "My favorite pet is a cat named Whiskers. He is a Persian cat with long, white, and soft fur. He has bright blue eyes that sparkle in the sun. Whiskers loves to play with a small ball. His favorite food is fish. Every morning, he waits for me by the door when I go to school. He is a very loyal and adorable companion.",
+                    question: "29. What is the main idea of the text?",
+                    options: ["The writer's daily routine", "A description of the writer's favorite pet", "How to take care of a Persian cat", "The writer's favorite food"],
+                    answer: "A description of the writer's favorite pet"
+                },
+                {
+                    question: "30. What does Whiskers look like?",
+                    options: ["He has short, black fur and green eyes", "He likes to eat fish", "He has long, white fur and blue eyes", "He is a loyal and adorable cat"],
+                    answer: "He has long, white fur and blue eyes"
+                },
+                {
+                    question: "31. 'He is a very loyal and <b>adorable</b> companion.' The word 'adorable' means ...",
+                    options: ["ugly", "charming", "active", "lazy"],
+                    answer: "charming"
+                },
+
+                // --- Reading Comprehension 3 (Recount Text) ---
+                {
+                    text: "<b>Read the text for questions 32 and 33.</b><br><br>" +
+                          "Yesterday, my family and I went to the zoo. We saw many kinds of animals. First, we visited the monkeys. They were jumping and climbing the trees. Then, we went to see the tigers. They looked big and strong. After lunch, we watched the elephant show. It was very entertaining. We felt very tired but happy when we got home.",
+                    question: "32. What is the purpose of the text?",
+                    options: ["To describe the zoo", "To tell the writer's past experience at the zoo", "To persuade people to visit the zoo", "To explain how elephants are trained"],
+                    answer: "To tell the writer's past experience at the zoo"
+                },
+                {
+                    question: "33. What did the writer do after lunch?",
+                    options: ["They visited the monkeys", "They went home", "They saw the tigers", "They watched the elephant show"],
+                    answer: "They watched the elephant show"
+                },
+
+                // Grammar: Passive Voice
+                {
+                    question: "34. The homework ... by the students every day.",
+                    options: ["is done", "are done", "was done", "did"],
+                    answer: "is done"
+                },
+                {
+                    question: "35. The letter ... by my mother yesterday.",
+                    options: ["writes", "is written", "was written", "wrote"],
+                    answer: "was written"
+                },
+
+                // Functional Text: Congratulations
+                {
+                    question: "36. Roni: 'I won the speech contest!'<br>Sari: '...'<br>Roni: 'Thank you.'",
+                    options: ["What a pity!", "Congratulations on your success!", "You're welcome.", "I'm sorry to hear that."],
+                    answer: "Congratulations on your success!"
+                },
+
+                // Functional Text: Giving Opinion
+                {
+                    question: "37. Dika: 'What do you think about our new classroom?'<br>Eka: '... It's cleaner and more comfortable.'",
+                    options: ["I don't know", "I think it's great", "I disagree", "It's terrible"],
+                    answer: "I think it's great"
+                },
+
+                // Vocabulary: Contextual
+                {
+                    question: "38. We need to ... the water before we drink it to kill the germs.",
+                    options: ["freeze", "boil", "cut", "mix"],
+                    answer: "boil"
+                },
+                
+                // Jumbled Sentences
+                {
+                    question: "39. Arrange these sentences into a good paragraph:<br>" +
+                              "(1) He named the cat 'Pus'.<br>" +
+                              "(2) One day, Andi found a small kitten on the street.<br>" +
+                              "(3) He decided to take it home and take care of it.<br>" +
+                              "(4) Now, Pus has grown into a healthy and playful cat.",
+                    options: ["(2)-(3)-(1)-(4)", "(1)-(2)-(3)-(4)", "(2)-(1)-(4)-(3)", "(3)-(2)-(1)-(4)"],
+                    answer: "(2)-(3)-(1)-(4)"
+                },
+
+                // Grammar: Simple Future
+                {
+                    question: "40. I am sure they ... the football match tomorrow.",
+                    options: ["win", "won", "will win", "are winning"],
+                    answer: "will win"
+                }
+            ];
+
+            // 2. DOM Elements
+            const quizContainer = document.getElementById("quiz-container");
+            const submitBtn = document.getElementById("submit-btn");
+            const resultsDiv = document.getElementById("results");
+
+            // 3. Global Variable
+            let score = 0;
+            let questionsAnswered = 0; // Untuk mengecek apakah semua sudah dijawab
+
+            // 4. Function untuk Memuat Soal
+            function loadQuiz() {
+                let quizHTML = "";
+                questions.forEach((q, index) => {
+                    // Tambahkan teks bacaan jika ada
+                    if (q.text) {
+                        quizHTML += `<div class="reading-text">${q.text}</div>`;
+                    }
+                    
+                    quizHTML += `<div class="question-block" id="q-${index}">`;
+                    quizHTML += `<div class="question-text">${q.question}</div>`;
+                    quizHTML += `<div class="options">`;
+
+                    // Acak pilihan jawaban (opsional, tapi bagus)
+                    const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+
+                    shuffledOptions.forEach(option => {
+                        quizHTML += `<button class="option" data-question-index="${index}" data-option-value="${option}">${option}</button>`;
+                    });
+                    
+                    quizHTML += `</div></div>`;
+                });
+                quizContainer.innerHTML = quizHTML;
+            }
+
+            // 5. Function untuk Cek Jawaban (Event Delegation)
+            function checkAnswer(event) {
+                const clickedElement = event.target;
+
+                // Pastikan yang diklik adalah tombol pilihan
+                if (!clickedElement.classList.contains('option')) {
+                    return;
+                }
+
+                const questionBlock = clickedElement.closest('.question-block');
+                
+                // Cek apakah soal ini sudah dijawab
+                if (questionBlock.classList.contains('answered')) {
+                    return;
+                }
+
+                // Tandai soal sudah dijawab
+                questionBlock.classList.add('answered');
+                questionsAnswered++;
+
+                // Ambil data dari tombol
+                const questionIndex = clickedElement.dataset.questionIndex;
+                const selectedAnswer = clickedElement.dataset.optionValue;
+                const correctAnswer = questions[questionIndex].answer;
+
+                // Cek kebenaran
+                if (selectedAnswer === correctAnswer) {
+                    clickedElement.classList.add('correct');
+                    score++; // Tambah skor
+                } else {
+                    clickedElement.classList.add('incorrect');
+                    
+                    // Tunjukkan jawaban yang benar
+                    const allOptions = questionBlock.querySelectorAll('.option');
+                    allOptions.forEach(opt => {
+                        if (opt.dataset.optionValue === correctAnswer) {
+                            opt.classList.add('correct');
+                        }
+                    });
+                }
+
+                // Matikan semua tombol di blok soal ini
+                const allOptions = questionBlock.querySelectorAll('.option');
+                allOptions.forEach(opt => {
+                    opt.disabled = true;
+                });
+            }
+
+            // 6. Function untuk Menampilkan Hasil
+            function showResults() {
+                // Cek apakah semua soal sudah dijawab
+                if (questionsAnswered < questions.length) {
+                    alert("Harap jawab semua soal terlebih dahulu sebelum melihat nilai!");
+                    return;
+                }
+
+                const totalQuestions = questions.length;
+                const percentage = Math.round((score / totalQuestions) * 100);
+
+                let resultMessage = `Kamu Benar ${score} dari ${totalQuestions} Soal.<br><strong>Nilai Kamu: ${percentage}</strong>`;
+
+                resultsDiv.innerHTML = resultMessage;
+                resultsDiv.style.display = "block";
+                submitBtn.style.display = "none"; // Sembunyikan tombol kirim
+
+                // Scroll ke hasil
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // 7. Event Listeners
+            loadQuiz(); // Muat soal saat halaman dibuka
+            quizContainer.addEventListener('click', checkAnswer); // Cek jawaban saat pilihan diklik
+            submitBtn.addEventListener('click', showResults); // Tampilkan hasil saat tombol kirim diklik
+        });
+    </script>
+
+</body>
+</html>
